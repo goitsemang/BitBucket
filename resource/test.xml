@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--DOCTYPE xml-image SYSTEM "logo.dtd"-->
+<xml-image>
+	<img width="20" height="40" depth="30">
+		<points>
+			<point x="1" y="2" z="3" /> 
+			<point x="5" y="6" z="7" />
+		</points>
+		<joints>
+			<joint pointA="0" pointB="1"/>
+		</joints>
+	</img>
+</xml-image>
