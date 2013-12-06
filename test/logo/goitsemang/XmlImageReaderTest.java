@@ -37,7 +37,7 @@ public class XmlImageReaderTest {
 	@Test
 	public void loadTest() {
 		XmlImageReader reader = new XmlImageReader();
-		XMLReader doc = reader.load("C:\\Users\\Mr G\\Documents\\Projects\\MultichoiceProj\\test.xml");
+		XMLReader doc = reader.load("resource\\test.xml");
 		
 		assertNotNull(doc);
 		assertNotNull(doc.getContentHandler());
@@ -47,13 +47,11 @@ public class XmlImageReaderTest {
 	public void xmlToPointsTest()
 	{
 		XmlImageReader reader = new XmlImageReader();
-		reader.load("C:\\Users\\Mr G\\Documents\\Projects\\MultichoiceProj\\test.xml");
+		reader.load("resource\\test.xml");
 		
-		List<XmlImage> images = reader.getImages();
-		assertNotNull(images);
-		assertEquals(1, images.size());
+		XmlImage image = reader.getImage();
+		assertNotNull(image);
 		
-		XmlImage image = images.get(0);
 		assertNotNull(image.getPoints());
 		assertEquals(20, image.getWidth());
 		assertEquals(40, image.getHeight());
@@ -100,12 +98,11 @@ public class XmlImageReaderTest {
 	public void createJavaImagesTest()
 	{
 		XmlImageReader reader = new XmlImageReader();
-		reader.load("C:\\Users\\Mr G\\Documents\\Projects\\MultichoiceProj\\test.xml");
+		reader.load("resource\\test.xml");
 		
 		
-		List<Image> images = reader.createJavaImages();
-		assertNotNull(images);
-		assertEquals(1, images.size());
+		Image image = reader.createJavaImage();
+		assertNotNull(image);
 		
 		
 		Point controlA = new Point();
@@ -139,7 +136,7 @@ public class XmlImageReaderTest {
 		//equals method in BufferedImage has not been overridden from object
 		String controlToString = controlImage.toString();
 		controlToString = controlToString.substring(controlToString.indexOf(":"));
-		String imageToString = images.get(0).toString();
+		String imageToString = image.toString();
 		imageToString = imageToString.substring(imageToString.indexOf(":"));
 		
 		assertEquals(controlToString, imageToString);

@@ -15,7 +15,7 @@ public class XmlLogo extends JPanel{
 	public XmlLogo()
 	{
 		reader = new XmlImageReader();
-		reader.load("C:\\Users\\Mr G\\Documents\\Projects\\MultichoiceProj\\logo.xml");
+		reader.load("resource\\logo.xml");
 		
 		setPreferredSize(new Dimension(500, 500));
 	}
@@ -24,7 +24,7 @@ public class XmlLogo extends JPanel{
 	public void paintComponent(Graphics pg)
 	{
 		super.paintComponent(pg);
-		Image image = reader.createJavaImages().get(0);
+		Image image = reader.createJavaImage();
 		pg.drawImage(image, 0, 0, this);
 	}
 

@@ -20,16 +20,12 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XmlImageReader {
 
 	private XMLReader xmlReader;
-	private List<XmlImage> xmlImages;
 	private XmlImage xmlImage;
 
-	public XmlImageReader() {
-		xmlImages = new ArrayList<XmlImage>();
-	}
 
 	public XMLReader load(String filename) {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
-		// spf.setNamespaceAware(true);
+		 spf.setNamespaceAware(true);
 		try {
 
 			SAXParser saxParser = spf.newSAXParser();
@@ -44,24 +40,19 @@ public class XmlImageReader {
 		return xmlReader;
 	}
 
-	public List<XmlImage> getImages() {
-		return xmlImages;
+	public XmlImage getImage() {
+		return xmlImage;
 	}
 	
-	public List<Image> createJavaImages()
+	public Image createJavaImage()
 	{
-		List<Image> images = new ArrayList<Image>(xmlImages.size());
-		for(XmlImage xmlImage : xmlImages)
+		Image image = new BufferedImage(xmlImage.getWidth(), xmlImage.getHeight(), Image.SCALE_SMOOTH);
+		Graphics pg = image.getGraphics();
+		for(Joint joint : xmlImage.getJoints())
 		{
-			Image image = new BufferedImage(xmlImage.getWidth(), xmlImage.getHeight(), Image.SCALE_SMOOTH);
-			Graphics pg = image.getGraphics();
-			for(Joint joint : xmlImage.getJoints())
-			{
-				pg.drawLine(joint.getPointA().getX(), joint.getPointA().getY(), joint.getPointB().getX(), joint.getPointB().getY());
-			}
-			images.add(image);
+			pg.drawLine(joint.getPointA().getX(), joint.getPointA().getY(), joint.getPointB().getX(), joint.getPointB().getY());
 		}
-		return images;
+		return image;
 	}
 
 	private class XmlImageHandler extends DefaultHandler {
@@ -95,14 +86,6 @@ public class XmlImageReader {
 				joint.setPointA(xmlImage.getPoints().get(Integer.parseInt(a)));
 				joint.setPointB(xmlImage.getPoints().get(Integer.parseInt(b)));
 				xmlImage.getJoints().add(joint);
-			}
-		}
-
-		@Override
-		public void endElement(String uri, String localName, String qName)
-				throws SAXException {
-			if ("img".equals(qName)) {
-				xmlImages.add(xmlImage);
 			}
 		}
 	}
